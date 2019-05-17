@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.utils.excel.mapper.categoryMapper" >
+  <resultMap id="BaseResultMap" type="com.utils.excel.mapper.pojo.category" >
+    <id column="cat_id" property="catId" jdbcType="SMALLINT" />
+    <result column="cat_name" property="catName" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="cat_desc" property="catDesc" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="SMALLINT" />
+    <result column="sort_order" property="sortOrder" jdbcType="BIT" />
+    <result column="template_file" property="templateFile" jdbcType="VARCHAR" />
+    <result column="measure_unit" property="measureUnit" jdbcType="VARCHAR" />
+    <result column="show_in_nav" property="showInNav" jdbcType="BIT" />
+    <result column="style" property="style" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="grade" property="grade" jdbcType="TINYINT" />
+    <result column="filter_attr" property="filterAttr" jdbcType="VARCHAR" />
+    <result column="cat_img" property="catImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cat_id, cat_name, keywords, cat_desc, parent_id, sort_order, template_file, measure_unit, 
+    show_in_nav, style, is_show, grade, filter_attr, cat_img
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.utils.excel.mapper.pojo.categoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ecs_category
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    from ecs_category
+    where cat_id = #{catId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from ecs_category
+    where cat_id = #{catId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.utils.excel.mapper.pojo.categoryExample" >
+    delete from ecs_category
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.utils.excel.mapper.pojo.category" >
+    insert into ecs_category (cat_id, cat_name, keywords, 
+      cat_desc, parent_id, sort_order, 
+      template_file, measure_unit, show_in_nav, 
+      style, is_show, grade, filter_attr, 
+      cat_img)
+    values (#{catId,jdbcType=SMALLINT}, #{catName,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+      #{catDesc,jdbcType=VARCHAR}, #{parentId,jdbcType=SMALLINT}, #{sortOrder,jdbcType=BIT}, 
+      #{templateFile,jdbcType=VARCHAR}, #{measureUnit,jdbcType=VARCHAR}, #{showInNav,jdbcType=BIT}, 
+      #{style,jdbcType=VARCHAR}, #{isShow,jdbcType=BIT}, #{grade,jdbcType=TINYINT}, #{filterAttr,jdbcType=VARCHAR}, 
+      #{catImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.utils.excel.mapper.pojo.category" keyProperty="catId" keyColumn="cat_id" useGeneratedKeys="true">
+    insert into ecs_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="catId != null" >
+        cat_id,
+      </if>
+      <if test="catName != null" >
+        cat_name,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="catDesc != null" >
+        cat_desc,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+      <if test="templateFile != null" >
+        template_file,
+      </if>
+      <if test="measureUnit != null" >
+        measure_unit,
+      </if>
+      <if test="showInNav != null" >
+        show_in_nav,
+      </if>
+      <if test="style != null" >
+        style,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="filterAttr != null" >
+        filter_attr,
+      </if>
+      <if test="catImg != null" >
+        cat_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="catId != null" >
+        #{catId,jdbcType=SMALLINT},
+      </if>
+      <if test="catName != null" >
+        #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="catDesc != null" >
+        #{catDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=SMALLINT},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=BIT},
+      </if>
+      <if test="templateFile != null" >
+        #{templateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="measureUnit != null" >
+        #{measureUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="showInNav != null" >
+        #{showInNav,jdbcType=BIT},
+      </if>
+      <if test="style != null" >
+        #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=BIT},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=TINYINT},
+      </if>
+      <if test="filterAttr != null" >
+        #{filterAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="catImg != null" >
+        #{catImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.utils.excel.mapper.pojo.categoryExample" resultType="java.lang.Integer" >
+    select count(*) from ecs_category
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ecs_category
+    <set >
+      <if test="record.catId != null" >
+        cat_id = #{record.catId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.catName != null" >
+        cat_name = #{record.catName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keywords != null" >
+        keywords = #{record.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catDesc != null" >
+        cat_desc = #{record.catDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sortOrder != null" >
+        sort_order = #{record.sortOrder,jdbcType=BIT},
+      </if>
+      <if test="record.templateFile != null" >
+        template_file = #{record.templateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.measureUnit != null" >
+        measure_unit = #{record.measureUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showInNav != null" >
+        show_in_nav = #{record.showInNav,jdbcType=BIT},
+      </if>
+      <if test="record.style != null" >
+        style = #{record.style,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isShow != null" >
+        is_show = #{record.isShow,jdbcType=BIT},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=TINYINT},
+      </if>
+      <if test="record.filterAttr != null" >
+        filter_attr = #{record.filterAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catImg != null" >
+        cat_img = #{record.catImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ecs_category
+    set cat_id = #{record.catId,jdbcType=SMALLINT},
+      cat_name = #{record.catName,jdbcType=VARCHAR},
+      keywords = #{record.keywords,jdbcType=VARCHAR},
+      cat_desc = #{record.catDesc,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=SMALLINT},
+      sort_order = #{record.sortOrder,jdbcType=BIT},
+      template_file = #{record.templateFile,jdbcType=VARCHAR},
+      measure_unit = #{record.measureUnit,jdbcType=VARCHAR},
+      show_in_nav = #{record.showInNav,jdbcType=BIT},
+      style = #{record.style,jdbcType=VARCHAR},
+      is_show = #{record.isShow,jdbcType=BIT},
+      grade = #{record.grade,jdbcType=TINYINT},
+      filter_attr = #{record.filterAttr,jdbcType=VARCHAR},
+      cat_img = #{record.catImg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.utils.excel.mapper.pojo.category" >
+    update ecs_category
+    <set >
+      <if test="catName != null" >
+        cat_name = #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="catDesc != null" >
+        cat_desc = #{catDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=SMALLINT},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=BIT},
+      </if>
+      <if test="templateFile != null" >
+        template_file = #{templateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="measureUnit != null" >
+        measure_unit = #{measureUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="showInNav != null" >
+        show_in_nav = #{showInNav,jdbcType=BIT},
+      </if>
+      <if test="style != null" >
+        style = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=TINYINT},
+      </if>
+      <if test="filterAttr != null" >
+        filter_attr = #{filterAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="catImg != null" >
+        cat_img = #{catImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cat_id = #{catId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.utils.excel.mapper.pojo.category" >
+    update ecs_category
+    set cat_name = #{catName,jdbcType=VARCHAR},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      cat_desc = #{catDesc,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=SMALLINT},
+      sort_order = #{sortOrder,jdbcType=BIT},
+      template_file = #{templateFile,jdbcType=VARCHAR},
+      measure_unit = #{measureUnit,jdbcType=VARCHAR},
+      show_in_nav = #{showInNav,jdbcType=BIT},
+      style = #{style,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=BIT},
+      grade = #{grade,jdbcType=TINYINT},
+      filter_attr = #{filterAttr,jdbcType=VARCHAR},
+      cat_img = #{catImg,jdbcType=VARCHAR}
+    where cat_id = #{catId,jdbcType=SMALLINT}
+  </update>
+</mapper>
